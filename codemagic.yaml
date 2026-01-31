@@ -6,7 +6,7 @@ workflows:
     # En Codemagic: crea una integración de App Store Connect (API Key)
     # y reemplaza el nombre aquí (literal, tal cual aparece en Codemagic).
     integrations:
-      app_store_connect: REEMPLAZA_CON_EL_NOMBRE_DE_TU_INTEGRACION
+      app_store_connect: App-Apoderado
 
     environment:
       vars:
