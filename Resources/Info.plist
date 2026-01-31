@@ -2,8 +2,33 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+    <!-- Básicos obligatorios -->
+    <key>CFBundleDevelopmentRegion</key>
+    <string>$(DEVELOPMENT_LANGUAGE)</string>
+
+    <key>CFBundleExecutable</key>
+    <string>$(EXECUTABLE_NAME)</string>
+
+    <key>CFBundleIdentifier</key>
+    <string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+
+    <key>CFBundleInfoDictionaryVersion</key>
+    <string>6.0</string>
+
+    <key>CFBundleName</key>
+    <string>$(PRODUCT_NAME)</string>
+
     <key>CFBundleDisplayName</key>
     <string>App Apoderado</string>
+
+    <key>CFBundlePackageType</key>
+    <string>APPL</string>
+
+    <key>CFBundleShortVersionString</key>
+    <string>$(MARKETING_VERSION)</string>
+
+    <key>CFBundleVersion</key>
+    <string>$(CURRENT_PROJECT_VERSION)</string>
 
     <key>LSRequiresIPhoneOS</key>
     <true/>
@@ -11,7 +36,7 @@
     <key>UILaunchStoryboardName</key>
     <string>LaunchScreen</string>
 
-    <!-- Requerido para evitar el error de orientaciones en distribución -->
+    <!-- Evita error de orientaciones en distribución -->
     <key>UIRequiresFullScreen</key>
     <true/>
 
@@ -50,7 +75,7 @@
         </dict>
     </dict>
 
-    <!-- Si tu sitio llegara a cargar recursos HTTP dentro de HTTPS -->
+    <!-- ATS -->
     <key>NSAppTransportSecurity</key>
     <dict>
         <key>NSAllowsArbitraryLoads</key>
@@ -59,9 +84,10 @@
         <true/>
     </dict>
 
-    <!-- Si tu web usa cámara/micrófono (WebRTC), deja esto -->
+    <!-- WebRTC -->
     <key>NSCameraUsageDescription</key>
     <string>Se requiere cámara para videollamadas.</string>
+
     <key>NSMicrophoneUsageDescription</key>
     <string>Se requiere micrófono para videollamadas.</string>
 </dict>
