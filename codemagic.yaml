@@ -6,15 +6,22 @@ workflows:
     environment:
       groups:
         - appstore_credentials
+
       ios_signing:
         distribution_type: app_store
         bundle_identifier: com.gladiatorcontrolbase.guardian
+
       vars:
         XCODEGEN_SPEC: "project.yml"
         XCODE_PROJECT: "AppApoderado.xcodeproj"
         XCODE_SCHEME: "AppApoderado"
+        BUNDLE_ID: "com.gladiatorcontrolbase.guardian"
 
     scripts:
+      - name: Install Codemagic CLI tools
+        script: |
+          pip3 install codemagic-cli-tools || true
+
       - name: Install / Update XcodeGen
         script: |
           brew install xcodegen || brew upgrade xcodegen
@@ -27,11 +34,12 @@ workflows:
         script: |
           xcode-project use-profiles
 
-      - name: Build IPA
+      - name: Build IPA (force iOS destination)
         script: |
           xcode-project build-ipa \
             --project "$CM_BUILD_DIR/$XCODE_PROJECT" \
-            --scheme "$XCODE_SCHEME"
+            --scheme "$XCODE_SCHEME" \
+            --archive-flags="-destination 'generic/platform=iOS'"
 
     artifacts:
       - build/ios/ipa/*.ipa
