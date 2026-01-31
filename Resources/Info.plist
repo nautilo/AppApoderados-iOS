@@ -11,9 +11,25 @@
     <key>UILaunchStoryboardName</key>
     <string>LaunchScreen</string>
 
+    <!-- Requerido para evitar el error de orientaciones en distribución -->
+    <key>UIRequiresFullScreen</key>
+    <true/>
+
+    <!-- iPhone: Portrait + Landscape -->
     <key>UISupportedInterfaceOrientations</key>
     <array>
         <string>UIInterfaceOrientationPortrait</string>
+        <string>UIInterfaceOrientationLandscapeLeft</string>
+        <string>UIInterfaceOrientationLandscapeRight</string>
+    </array>
+
+    <!-- iPad: todas -->
+    <key>UISupportedInterfaceOrientations~ipad</key>
+    <array>
+        <string>UIInterfaceOrientationPortrait</string>
+        <string>UIInterfaceOrientationPortraitUpsideDown</string>
+        <string>UIInterfaceOrientationLandscapeLeft</string>
+        <string>UIInterfaceOrientationLandscapeRight</string>
     </array>
 
     <key>UIApplicationSceneManifest</key>
