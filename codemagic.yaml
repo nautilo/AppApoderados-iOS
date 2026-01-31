@@ -3,18 +3,18 @@ workflows:
     name: iOS (Swift) -> TestFlight
     instance_type: mac_mini_m2
 
-    # En Codemagic: crea una integración de App Store Connect (API Key)
-    # y reemplaza el nombre aquí (literal, tal cual aparece en Codemagic).
-    integrations:
-      app_store_connect: App-Apoderado
-
     environment:
       vars:
         XCODEGEN_SPEC: "project.yml"
         XCODE_PROJECT: "AppApoderado.xcodeproj"
         XCODE_SCHEME: "AppApoderado"
+        BUNDLE_ID: "com.gladiatorcontrolbase.guardian"
 
     scripts:
+      - name: Install Codemagic CLI tools
+        script: |
+          pip3 install codemagic-cli-tools
+
       - name: Install / Update XcodeGen
         script: |
           brew install xcodegen || brew upgrade xcodegen
@@ -23,7 +23,19 @@ workflows:
         script: |
           xcodegen generate --spec "$CM_BUILD_DIR/$XCODEGEN_SPEC"
 
-      - name: Set up code signing
+      - name: Set up keychain
+        script: |
+          keychain initialize
+
+      - name: Fetch signing files (App Store) + create if missing
+        script: |
+          app-store-connect fetch-signing-files "$BUNDLE_ID" --type IOS_APP_STORE --create
+
+      - name: Add certificates to keychain
+        script: |
+          keychain add-certificates
+
+      - name: Apply provisioning profiles to Xcode project
         script: |
           xcode-project use-profiles
 
@@ -39,5 +51,7 @@ workflows:
 
     publishing:
       app_store_connect:
-        auth: integration
+        api_key: $APP_STORE_CONNECT_PRIVATE_KEY
+        key_id: $APP_STORE_CONNECT_KEY_IDENTIFIER
+        issuer_id: $APP_STORE_CONNECT_ISSUER_ID
         submit_to_testflight: true
