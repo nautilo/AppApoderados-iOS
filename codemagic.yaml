@@ -1,0 +1,43 @@
+workflows:
+  ios-testflight:
+    name: iOS (Swift) -> TestFlight
+    instance_type: mac_mini_m2
+
+    # En Codemagic: crea una integración de App Store Connect (API Key)
+    # y reemplaza el nombre aquí (literal, tal cual aparece en Codemagic).
+    integrations:
+      app_store_connect: REEMPLAZA_CON_EL_NOMBRE_DE_TU_INTEGRACION
+
+    environment:
+      vars:
+        XCODEGEN_SPEC: "project.yml"
+        XCODE_PROJECT: "AppApoderado.xcodeproj"
+        XCODE_SCHEME: "AppApoderado"
+
+    scripts:
+      - name: Install / Update XcodeGen
+        script: |
+          brew install xcodegen || brew upgrade xcodegen
+
+      - name: Generate Xcode project (XcodeGen)
+        script: |
+          xcodegen generate --spec "$CM_BUILD_DIR/$XCODEGEN_SPEC"
+
+      - name: Set up code signing
+        script: |
+          xcode-project use-profiles
+
+      - name: Build IPA
+        script: |
+          xcode-project build-ipa \
+            --project "$CM_BUILD_DIR/$XCODE_PROJECT" \
+            --scheme "$XCODE_SCHEME"
+
+    artifacts:
+      - build/ios/ipa/*.ipa
+      - /tmp/xcodebuild_logs/*.log
+
+    publishing:
+      app_store_connect:
+        auth: integration
+        submit_to_testflight: true

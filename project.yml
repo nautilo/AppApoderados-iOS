@@ -1,0 +1,34 @@
+name: AppApoderado
+options:
+  createIntermediateGroups: true
+
+targets:
+  AppApoderado:
+    type: application
+    platform: iOS
+    deploymentTarget: "13.0"
+
+    sources:
+      - path: Sources
+
+    resources:
+      - path: Resources
+
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: cl.apoderado.webview
+
+        INFOPLIST_FILE: Resources/Info.plist
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+
+        MARKETING_VERSION: 1.0
+        CURRENT_PROJECT_VERSION: 1
+
+        CODE_SIGN_STYLE: Automatic
+        SWIFT_VERSION: 5.0
+
+schemes:
+  AppApoderado:
+    build:
+      targets:
+        AppApoderado: all
