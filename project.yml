@@ -9,8 +9,12 @@ targets:
     deploymentTarget: "13.0"
     sources:
       - path: Sources
+    # IMPORTANT: Do not add the whole Resources/ directory as a folder reference.
+    # If XcodeGen creates a folder reference, Assets.xcassets will NOT be compiled
+    # into Assets.car and App Store Connect will report missing icons.
     resources:
-      - path: Resources
+      - path: Resources/Assets.xcassets
+      - path: Resources/Base.lproj/LaunchScreen.storyboard
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.gladiatorcontrolbase.guardian
