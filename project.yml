@@ -7,14 +7,11 @@ targets:
     type: application
     platform: iOS
     deploymentTarget: "13.0"
+    # XcodeGen parses resources (including .xcassets and .storyboard) from `sources`.
+    # Keeping the asset catalog under `sources` ensures it gets compiled into Assets.car.
     sources:
       - path: Sources
-    # IMPORTANT: Do not add the whole Resources/ directory as a folder reference.
-    # If XcodeGen creates a folder reference, Assets.xcassets will NOT be compiled
-    # into Assets.car and App Store Connect will report missing icons.
-    resources:
-      - path: Resources/Assets.xcassets
-      - path: Resources/Base.lproj/LaunchScreen.storyboard
+      - path: Resources
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.gladiatorcontrolbase.guardian
